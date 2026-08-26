@@ -1,7 +1,7 @@
 include("premake/utils")
 
 SDK_PATH = os.getenv("HL2SDKCS2")
-MM_PATH = os.getenv("MMSOURCE112")
+MM_PATH = os.getenv("MMSOURCE_DEV")
 
 if(SDK_PATH == nil) then
 	error("INVALID HL2SDK PATH")
@@ -11,13 +11,53 @@ if(MM_PATH == nil) then
 	error("INVALID METAMOD PATH")
 end
 
+newaction {
+	trigger = "package",
+	description = "Package StripperCS2",
+	execute = function()
+		local package_path = path.join(_MAIN_SCRIPT_DIR, "build", "package", "StripperCS2")
+		local package_bin_path = path.join(package_path, "addons", "StripperCS2", "bin")
+		local package_metamod_path = path.join(package_path, "addons", "metamod")
+		local bin_path = path.join(_MAIN_SCRIPT_DIR, "bin", "Release")
+		local binaries = os.target() == "windows"
+			and { "StripperCS2.dll", "StripperCS2.pdb" }
+			or { "StripperCS2.so" }
+		local function copy_file(source, destination)
+			if not os.isfile(source) then
+				error("MISSING PACKAGE FILE: " .. source)
+			end
+
+			local ok, err = os.copyfile(source, destination)
+			if not ok then
+				error(err)
+			end
+		end
+
+		os.mkdir(package_bin_path)
+		os.mkdir(package_metamod_path)
+
+		for _, binary in ipairs(binaries) do
+			copy_file(path.join(bin_path, binary), path.join(package_bin_path, binary))
+		end
+
+		copy_file(
+			path.join(_MAIN_SCRIPT_DIR, "package", "StripperCS2.vdf"),
+			path.join(package_metamod_path, "StripperCS2.vdf")
+		)
+	end
+}
+
 workspace "StripperCS2"
 	configurations { "Debug", "Release" }
 	platforms {
-		"win64",
-		"linux64"
+		"x64"
 	}
 	location "build"
+	filter "system:windows"
+		buildoptions { "/utf-8" }
+	filter "system:linux"
+		toolset "clang"
+	filter {}
 
 project "StripperCS2"
 	kind "SharedLib"
@@ -67,7 +107,7 @@ project "StripperCS2"
 
 	defines { "META_IS_SOURCE2", "PCRE2_CODE_UNIT_WIDTH=8", "PCRE2_STATIC" }
 
-	flags { "MultiProcessorCompile" }
+	multiprocessorcompile "On"
 	pic "On"
 
 	links {

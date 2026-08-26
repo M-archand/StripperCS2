@@ -1,0 +1,5 @@
+"Metamod Plugin"
+{
+	"alias"	"StripperCS2"
+	"file"	"addons\StripperCS2\bin\StripperCS2"
+}

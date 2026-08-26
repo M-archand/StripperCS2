@@ -144,7 +144,7 @@ void AddEntityInsert(CEntityKeyValues* keyValues, const ActionEntry& entry)
 		auto timesToFire = io->m_nTimesToFire.value_or(-1);
 		auto targetType = io->m_eTargetType.value_or(ENTITY_IO_TARGET_ENTITYNAME_OR_CLASSNAME); // Default value used by Hammer IO
 
-		spdlog::info("Created IO {} {} {} {} {} {} {}", outputName.c_str(), targetType, targetName.c_str(), inputName.c_str(), overrideParam.c_str(), delay, timesToFire);
+		spdlog::info("Created IO {} {} {} {} {} {} {}", outputName.c_str(), static_cast<int>(targetType), targetName.c_str(), inputName.c_str(), overrideParam.c_str(), delay, timesToFire);
 		keyValues->AddConnectionDesc(outputName.c_str(), targetType, targetName.c_str(), inputName.c_str(), overrideParam.c_str(), delay, timesToFire);
 	}
 	else if (auto str = std::get_if<std::string>(&entry.m_Value))

@@ -1,7 +1,6 @@
 files {
 	path.join(SDK_PATH, "public", "tier0", "memoverride.cpp"),
 	path.join(SDK_PATH, "tier1", "convar.cpp"),
-	path.join(SDK_PATH, "tier1", "generichash.cpp"),
 	path.join(SDK_PATH, "entity2", "entitysystem.cpp"),
 	path.join(SDK_PATH, "entity2", "entityidentity.cpp"),
 	path.join(SDK_PATH, "entity2", "entitykeyvalues.cpp"),
@@ -19,7 +18,6 @@ libdirs {
 
 linkoptions {
 	"-l:libtier0.so",
-	"-l:tier1.a",
 	"-l:interfaces.a",
 	"-l:mathlib.a",
 }
@@ -37,7 +35,6 @@ includedirs {
 	path.join(SDK_PATH, "public", "tier0"),
 	path.join(SDK_PATH, "public", "tier1"),
 	path.join(SDK_PATH, "public", "entity2"),
-	path.join(SDK_PATH, "public", "game", "server"),
 	path.join(SDK_PATH, "public", "public", "entity2"),
 	-- metamod
 	path.join(MM_PATH, "core"),
