@@ -1,0 +1,60 @@
+{
+	"filter": [
+		{
+			// no terrorists >:(
+			"classname": "info_player_terrorist"
+		}
+	],
+
+	"modify": [
+		{
+			"match":
+			{
+				"classname": "func_door_rotating",
+				"io": [
+					{
+						"outputname": "OnFullyClosed"
+					}
+				]
+			},
+			"replace":
+			{
+				"targetname": "yippe",
+				"io":
+				{
+					"outputname": "OnClose"
+				}
+			},
+			"insert":
+			{
+				"renderamt": "100",
+				"io": [
+					{
+						"outputname": "OnFullyOpened",
+						"inputname": "Lock",
+						"targetname": "lockable_door"
+					}
+				]
+			},
+			"delete":
+			{
+				"model": "models/bruh.mdl"
+			}
+		}
+	],
+
+	"add": [
+		{
+			"classname": "func_button",
+			"origin": "100 10 500"
+			// ...
+		}
+	],
+
+	// Optional single object style, instead of using array
+	"add": {
+		"classname": "trigger_multiple",
+		"origin": "500 80 1000"
+		// ...
+	}
+}

@@ -190,7 +190,7 @@ Unlike Stripper:Source you don't need to delete and insert an output to modify i
       },
       "delete":
       {
-        "model": "models/bruh.mdl",
+        "model": "models/bruh.mdl"
       }
     }
   ],

@@ -18,6 +18,7 @@ newaction {
 		local package_path = path.join(_MAIN_SCRIPT_DIR, "build", "package", "StripperCS2")
 		local package_bin_path = path.join(package_path, "addons", "StripperCS2", "bin")
 		local package_metamod_path = path.join(package_path, "addons", "metamod")
+		local package_example_path = path.join(package_path, "addons", "StripperCS2", "maps", "de_example")
 		local bin_path = path.join(_MAIN_SCRIPT_DIR, "bin", "Release")
 		local binaries = os.target() == "windows"
 			and { "StripperCS2.dll", "StripperCS2.pdb" }
@@ -35,6 +36,7 @@ newaction {
 
 		os.mkdir(package_bin_path)
 		os.mkdir(package_metamod_path)
+		os.mkdir(package_example_path)
 
 		for _, binary in ipairs(binaries) do
 			copy_file(path.join(bin_path, binary), path.join(package_bin_path, binary))
@@ -43,6 +45,10 @@ newaction {
 		copy_file(
 			path.join(_MAIN_SCRIPT_DIR, "package", "StripperCS2.vdf"),
 			path.join(package_metamod_path, "StripperCS2.vdf")
+		)
+		copy_file(
+			path.join(_MAIN_SCRIPT_DIR, "package", "default_ents.jsonc"),
+			path.join(package_example_path, "default_ents.jsonc")
 		)
 	end
 }
